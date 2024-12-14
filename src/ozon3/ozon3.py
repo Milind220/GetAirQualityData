@@ -558,10 +558,13 @@ class Ozon3:
             # Take first search result
             search_result = self.get_city_station_options(city)
             if len(search_result) == 0:
-                raise Exception(
+                warnings.warn(
                     f'The search for city "{city}" returns no result. It is possible '
-                    "that the city does not have AQI station."
+                    "that the city does not have an AQI station."
                 )
+                return (
+                    pandas.DataFrame()
+                )  # Return an empty DataFrame to avoid further errors.
 
             first_result = search_result.iloc[0, :]
 
